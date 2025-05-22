@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title th:text="${title}"></title>
+  
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div class="dashboard">
+
+    <header th:replace="blocks/header :: header"></header>
+    
+    <h1>Открытие смены</h1>
+    
+    <form action="/openWorkShift" method="post">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+      <input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+
+      <select name="timeOfDay" required>
+        <option value="" disabled selected>Выберите время суток</option>
+        <option value="afternoon">День</option>
+        <option value="night">Ночь</option>
+      </select>
+      
+      
+      <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
+      <button type="submit">Открыть смену</button>
+    </form>
+    
+  </div>
+  <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

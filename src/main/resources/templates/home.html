@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title th:text="${title}"></title>
+  
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div class="dashboard">
+
+    <header th:replace="blocks/header :: header"></header>
+    
+    <div class="main-grid">
+
+      <div class="block" > <!--  th:each="compressor : ${compressors}" -->
+        <div class="block-title">Статистика</div>
+        <ul class="menu-list">
+          <!-- <li> <a th:href="'compressor/' + ${compressor.id}" > Компрессор №<h5 th:text="${compressor.number}"/> - Модель: <h5 th:text="${compressor.number}"/> </a></li> -->
+        </ul>
+      </div>
+      
+      
+      <div class="block">
+
+        <div id="stationLink" th:if="${station != null}">
+          <div class="block-title" ><span>Станция</span> <a th:if="${user.role == 'Начальник'}" href="/addStation">Добавить станцию</a></div>
+          <div>
+              <p th:text="'АГНКС-' +   ${station.number} + ' г. ' + ${station.city}" > </p>
+              <p th:if="${workerOnWorkShift != null}" th:text="'На смене: ' + ${workerOnWorkShift.surname} + ' ' + ${workerOnWorkShift.name}"> </p>
+              <p th:if="${workerOnWorkShift == null}">Пересменка</p>
+          </div>
+        </div>
+
+        
+        
+        <table class="data-table" th:if="${compressors != null}">
+          <tr><th>Оборудование</th><th>Статус</th></tr>
+          <tr th:each="compressor : ${compressors}">
+            <td th:text="'Компрессор ' + ${compressor.number}"></td>
+            <td th:text="${lastReportsMap[compressor.id] != null and lastReportsMap[compressor.id].inWork} ? 'В работе' : 'Авария'"></td>
+            
+          </tr>
+        </table>
+  
+        <p th:if="${compressors == null} and  ${station != null}" >На этой станции нет компрессоров</p>
+
+        <div  th:if="${station == null}">
+          <div class="block-title" > <a th:if="${user.role == 'Начальник'}" href="/addStation">Добавить станцию</a></div>
+            <form th:action="@{/joinToStation}" method="get">
+              <h3 th:text="${nullStation}"></h3>
+              <button type="submit">Присоединиться к станции</button>
+            </form>
+          
+        </div>
+      </div>
+
+
+      <div class="block" th:if="${user.role == 'Машинист'}">
+        <div class="block-title" >Смена</div>
+        <ul class="stats-list">
+          <li><a href="/openWorkShift">Заступить на смену</a></li>
+          <li><a href="/closeWorkShift">Окончить смену</a></li>
+          <li><a href="/choiceCompressor">Внести показания</a></li>
+        </ul>
+      </div>
+
+      <div class="block ">
+        <div class="block-title">Задания</div>
+        <ul class="menu-list">
+          <li>Первое задание</li>
+          <li>Второе задание</li>
+          <li>Третье задание</li>
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+  <script th:src="@{/js/script.js}"></script>
+  <script>
+    document.getElementById('stationLink').onclick = function() {
+    
+    window.location.href = '/station';
+  };
+
+  </script>
+</body>
+</html>
+
+

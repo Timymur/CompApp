@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title th:text="${title}"></title>
+  
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div class="dashboard">
+
+    <header th:replace="blocks/header :: header"></header>
+    
+    
+    <div class="main-grid">
+        <div class="block" >
+            <div class="block-title" >Профиль</div>
+            <ul class="stats-list">
+                <li th:text="Login + ': ' + ${user.login}"></li>
+                <li th:text="Имя + ': ' + ${user.name}"></li>
+                <li th:text="Фамилия + ': ' + ${user.surname}"></li>
+                <li th:text="${station != null ? 'Станиця: АГНКС-' + station.number + ' г. ' + station.city : 'Станиця: Не назначена'}"></li>
+                <li th:text="Должность + ': ' + ${user.role}"></li>
+            </ul>
+        </div>
+
+   
+        <div class="block">
+            <div class="block-title" >Действия</div>
+            <ul class="stats-list">
+                <li><a href="/changeData">Изменить данные</a></li>
+                <li th:if="${station != null}"><a href="/outStation">Покинуть станцию</a></li>
+                <li th:unless="${station != null}"><a href="/joinToStation">Присоединиться к станции</a></li>
+                <li><a href="/logout">Выйти с аккаунта</a></li>
+            </ul>
+            
+            <span></span>
+            <span></span>
+        
+        </div>
+    </div>
+    
+  </div>
+  <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>
