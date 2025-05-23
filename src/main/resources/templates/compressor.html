@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'Отчёты по компрессору ' + ${compressor.number}"></title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="dashboard">
+    <header th:replace="blocks/header :: header"></header>
+    <div class="block-title" th:text="'Компрессор ' + ${compressor.number}"></div>
+    <p th:text="' Наработка: ' + ${reports[0].working_time} + ' часов' "></p>
+    <div class="main-grid">
+        
+
+        <div class="block">
+            <canvas id="coolant_temp" ></canvas>
+        </div>
+        <div class="block">
+            <canvas id="oil_pressure" ></canvas>
+        </div>
+        <div class="block">
+            <canvas id="gas_pollution" ></canvas>
+        </div>
+        <div class="block">
+            <canvas id="dew_point" ></canvas>
+        </div>
+        <div class="block">
+            <canvas id="vibration" ></canvas>
+        </div>
+
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    window.reports = /*[[${reports}]]*/ [];
+    /*]]>*/
+</script>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/scriptCharts.js}"></script>
+
+</body>
+</html>

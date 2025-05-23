@@ -2,6 +2,9 @@ package com.webApp.CompApp.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.webApp.CompApp.models.Compressor;
@@ -35,5 +38,13 @@ public class ReportService {
     public void save(Report report) {
         reportRepository.save(report);
     }
+
+    public List<Report> findTop15ReportsByCompressorId(Long compressorId){
+        
+        PageRequest pageable = PageRequest.of(0, 15);
+        List<Report> reports = reportRepository.findTopByCompressorIdOrderByIdDesc(compressorId, pageable);
+        return reports;
+    }
+
 
 }
