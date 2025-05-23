@@ -27,7 +27,7 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/authorization") // путь к кастомной странице входа
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/profile", true)
                 .permitAll()
             )
             .logout(logout -> logout

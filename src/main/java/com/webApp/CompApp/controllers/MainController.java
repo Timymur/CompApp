@@ -1,5 +1,6 @@
 package com.webApp.CompApp.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,22 @@ public class MainController {
         
 		model.addAttribute("station", station);
 		
+		List<User> workers = userService.findByStationId(station.getId());
 
+        User boss = null;
+        List<User> workersWithoutBoss = new ArrayList<>();
+		
+        for (User worker : workers) {
+            if ("Начальник".equals(worker.getRole())) {
+                boss = worker;
+				model.addAttribute("boss", boss);
+            } else {
+                workersWithoutBoss.add(worker);
+            }
+			if(worker.getInWork()) {
+				model.addAttribute("workerOnWorkShift", worker);
+			}
+        }
 		
 		List<Compressor> compressors = compressorService.findByStationId(station.getId());
 
@@ -78,18 +94,11 @@ public class MainController {
 		}
 		
 
-		List<User> users = userService.findByStationId(station.getId());
-        for(User worker : users){
-            if(worker.getInWork()) {
-                model.addAttribute("workerOnWorkShift", worker);
-            }
-        }
 		
-		// List<Smena> smens = smenaRepository.findAll();
-		// model.addAttribute("smens", smens);
-
-		// List<Task> tasks =  taskRepository.findAll();
-		// model.addAttribute("tasks", tasks);
+		model.addAttribute("compressors", compressors);
+        
+        model.addAttribute("workers", workersWithoutBoss);
+        model.addAttribute("station", station);
 		
 
 		model.addAttribute("title", "Главная страница");

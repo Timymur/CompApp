@@ -15,6 +15,7 @@
     
     
     <div class="main-grid">
+
         <div class="block" >
             <div class="block-title" >Профиль</div>
             <ul class="stats-list">
@@ -25,21 +26,18 @@
                 <li th:text="Должность + ': ' + ${user.role}"></li>
             </ul>
         </div>
-
    
         <div class="block">
             <div class="block-title" >Действия</div>
             <ul class="stats-list">
                 <li><a href="/changeData">Изменить данные</a></li>
                 <li th:if="${station != null}"><a href="/outStation">Покинуть станцию</a></li>
-                <li th:unless="${station != null}"><a href="/joinToStation">Присоединиться к станции</a></li>
+                <!-- <li th:if="${station == null}"><a href="/joinToStation">Присоединиться к станции</a></li> -->
+                <li><a th:if="${user.role == 'Начальник'}" href="/addStation">Добавить станцию</a></li>
                 <li><a href="/logout">Выйти с аккаунта</a></li>
             </ul>
-            
-            <span></span>
-            <span></span>
-        
         </div>
+
     </div>
     
   </div>

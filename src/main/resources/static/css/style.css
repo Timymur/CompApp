@@ -177,7 +177,10 @@ body {
   .data-table td {
     border-bottom: 1px solid #f0f0f0;
   }
-  
+  .data-table tr[data-href]:hover {
+    background-color: #f0f4ff;
+    cursor: pointer;
+}
   .menu-list {
     list-style: none;
     padding: 0;

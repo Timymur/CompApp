@@ -30,65 +30,19 @@ import com.webApp.CompApp.models.User;
 @Controller
 public class StationController {
 
-	private final ReportService reportService;
+	//private final ReportService reportService;
 	private final UserService userService;
     private final StationService stationService;
-	private final CompressorService compressorService;
+	//private final CompressorService compressorService;
 
 
     public StationController(UserService userService, StationService stationService, CompressorService compressorService, ReportService reportService) {
         this.userService = userService;
         this.stationService = stationService;
-		this.compressorService = compressorService;
-		this.reportService = reportService;
+		//this.compressorService = compressorService;
+		//this.reportService = reportService;
     }
 
-	@GetMapping("/station")
-    public String station(Model model) {
-
-        User user = userService.GetCurrentUser();
-        if (user == null) return "redirect:/"; 
-
-        Station station = user.getStation();
-        if (station == null)  return "redirect:/";
-        
-
-        List<User> workers = userService.findByStationId(station.getId());
-
-        User boss = null;
-        List<User> workersWithoutBoss = new ArrayList<>();
-        for (User worker : workers) {
-            if ("Начальник".equals(worker.getRole())) {
-                boss = worker;
-            } else {
-                workersWithoutBoss.add(worker);
-            }
-			if(worker.getInWork()) {
-				model.addAttribute("workerOnSmena", worker);
-			}
-        }
-
-		List<Compressor> compressors = compressorService.findByStationId(station.getId());
-		Map<Long, Report> lastReportsMap = new HashMap<>();
-		
-		if(compressors == null) model.addAttribute("nullCompressors", "На этой станции нет компрессоров");
-		else {
-			for (Compressor compressor : compressors) {
-    			Report lastReport = reportService.findLastReportByCompressorId(compressor.getId());
-    			lastReportsMap.put(compressor.getId(), lastReport);
-			}
-			model.addAttribute("lastReportsMap", lastReportsMap);
-		}
-
-
-		model.addAttribute("compressors", compressors);
-        model.addAttribute("boss", boss);
-        model.addAttribute("workers", workersWithoutBoss);
-        model.addAttribute("station", station);
-        model.addAttribute("title", "Станция");
-
-        return "station";
-    }
 
 	@GetMapping("/addStation")
 	public String AddStation(Model model) {

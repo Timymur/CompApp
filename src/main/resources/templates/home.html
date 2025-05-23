@@ -15,57 +15,55 @@
     
     <div class="main-grid">
 
-      <div class="block" > <!--  th:each="compressor : ${compressors}" -->
-        <div class="block-title">Статистика</div>
-        <ul class="menu-list">
-          <!-- <li> <a th:href="'compressor/' + ${compressor.id}" > Компрессор №<h5 th:text="${compressor.number}"/> - Модель: <h5 th:text="${compressor.number}"/> </a></li> -->
-        </ul>
-      </div>
-      
-      
       <div class="block">
-
         <div id="stationLink" th:if="${station != null}">
-          <div class="block-title" ><span>Станция</span> <a th:if="${user.role == 'Начальник'}" href="/addStation">Добавить станцию</a></div>
+          <div class="block-title" th:text="'Станция  АГНКС-' +   ${station.number} + ' г. ' + ${station.city}" ></div>
           <div>
-              <p th:text="'АГНКС-' +   ${station.number} + ' г. ' + ${station.city}" > </p>
-              <p th:if="${workerOnWorkShift != null}" th:text="'На смене: ' + ${workerOnWorkShift.surname} + ' ' + ${workerOnWorkShift.name}"> </p>
-              <p th:if="${workerOnWorkShift == null}">Пересменка</p>
+             
+              <p th:if="${boss != null}" th:text="'Начальник: ' + ${boss.surname} + ' ' + ${boss.name}"></p>
+              <p th:if="${boss == null}">Начальник не назначен</p>
+
+              <ul class="stats-list" th:each="worker : ${workers}">
+                <li th:text="${worker.role} + ': ' + ${worker.surname} + ' ' +  ${worker.name}"></li>
+              </ul>
           </div>
         </div>
-
-        
-        
-        <table class="data-table" th:if="${compressors != null}">
-          <tr><th>Оборудование</th><th>Статус</th></tr>
-          <tr th:each="compressor : ${compressors}">
-            <td th:text="'Компрессор ' + ${compressor.number}"></td>
-            <td th:text="${lastReportsMap[compressor.id] != null and lastReportsMap[compressor.id].inWork} ? 'В работе' : 'Авария'"></td>
-            
-          </tr>
-        </table>
-  
-        <p th:if="${compressors == null} and  ${station != null}" >На этой станции нет компрессоров</p>
-
         <div  th:if="${station == null}">
           <div class="block-title" > <a th:if="${user.role == 'Начальник'}" href="/addStation">Добавить станцию</a></div>
             <form th:action="@{/joinToStation}" method="get">
               <h3 th:text="${nullStation}"></h3>
               <button type="submit">Присоединиться к станции</button>
-            </form>
-          
+            </form>  
         </div>
       </div>
 
+      <div class="block ">
+        <div class="block-title" ><span>Оборудование</span> <a href="/addCompressor">Добавить</a></div>
+        <table class="data-table" th:if="${compressors != null}">
+            <tr><th>Наименование</th><th>Статус</th><th>Ошибка</th></tr>
+            <tr th:each="compressor : ${compressors}" th:attr="data-href=@{'/compressor/' + ${compressor.id}}">
+              <td th:text="'Компрессор ' + ${compressor.number}"></td>
+              <td th:text="${lastReportsMap[compressor.id] != null and lastReportsMap[compressor.id].inWork} ? 'В работе' : 'Авария'"></td>
+              <td th:text="${lastReportsMap[compressor.id] != null ? lastReportsMap[compressor.id].error : 'Нет ошибок'}"></td>
+            </tr>
+        </table>
 
-      <div class="block" th:if="${user.role == 'Машинист'}">
+        <p th:if="${compressors == null or #lists.isEmpty(compressors)}">На этой станции нет компрессоров</p>
+
+      </div>
+
+
+      <div class="block" >
         <div class="block-title" >Смена</div>
-        <ul class="stats-list">
+        <p th:if="${workerOnWorkShift != null}" th:text="'На смене: ' + ${workerOnWorkShift.surname} + ' ' + ${workerOnWorkShift.name}"> </p>
+        <p th:if="${workerOnWorkShift == null}">Пересменка</p>
+        <ul class="stats-list" th:if="${user.role == 'Машинист'}">
           <li><a href="/openWorkShift">Заступить на смену</a></li>
           <li><a href="/closeWorkShift">Окончить смену</a></li>
           <li><a href="/choiceCompressor">Внести показания</a></li>
         </ul>
       </div>
+
 
       <div class="block ">
         <div class="block-title">Задания</div>
@@ -78,14 +76,17 @@
       
     </div>
   </div>
-  <script th:src="@{/js/script.js}"></script>
-  <script>
-    document.getElementById('stationLink').onclick = function() {
-    
-    window.location.href = '/station';
-  };
 
-  </script>
+
+  <script th:src="@{/js/script.js}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(function(){
+      $('.data-table tr[data-href]').click(function(){
+        window.location = $(this).data('href');
+      });
+    });
+</script>
 </body>
 </html>
 
