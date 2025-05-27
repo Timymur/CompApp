@@ -92,10 +92,6 @@ public class MainController {
 			model.addAttribute("lastReportsMap", lastReportsMap);
 			model.addAttribute("compressors", compressors);
 		}
-		
-
-		
-		model.addAttribute("compressors", compressors);
         
         model.addAttribute("workers", workersWithoutBoss);
         model.addAttribute("station", station);

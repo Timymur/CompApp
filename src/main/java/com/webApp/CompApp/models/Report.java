@@ -75,7 +75,7 @@ public class Report {
         return workShift;
     }
 
-    public void setSmena(WorkShift workShift) {
+    public void setWorkShift(WorkShift workShift) {
         this.workShift = workShift;
     }
 

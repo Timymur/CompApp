@@ -26,13 +26,13 @@ public class ReportController {
 
     private final UserService userService;
     private final CompressorService compressorService;
-    private final WorkShiftService smenaService;
+    private final WorkShiftService workShiftService;
     private final ReportService reportService;
     
-    public ReportController(UserService userService, CompressorService compressorService, WorkShiftService smenaService, ReportService reportService) {
+    public ReportController(UserService userService, CompressorService compressorService, WorkShiftService workShiftService, ReportService reportService) {
         this.userService = userService;
         this.compressorService = compressorService;
-        this.smenaService = smenaService;
+        this.workShiftService = workShiftService;
         this.reportService = reportService;
     }
 
@@ -64,7 +64,7 @@ public class ReportController {
                                   @RequestParam String error,  Model model) {
     	
         User user = userService.GetCurrentUser();
-        WorkShift smena = smenaService.findActiveByWorkerId(user.getId()).orElse(null);
+        WorkShift smena = workShiftService.findActiveByWorkerId(user.getId()).orElse(null);
         Compressor compressor = compressorService.findById(compressor_id).orElse(null);
         
         try{
