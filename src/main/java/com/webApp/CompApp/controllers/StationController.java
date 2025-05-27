@@ -90,7 +90,7 @@ public class StationController {
 			userService.save(user);
 
 		}
-    	return "redirect:/station";
+    	return "redirect:/";
 	}
 
 	@GetMapping("/outStation")

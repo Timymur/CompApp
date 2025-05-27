@@ -57,7 +57,7 @@ public class UserService {
         user.setSurname(surname);
         user.setLogin(login);
         // Хэшируем пароль перед сохранением. Spring Security автоматически использует PasswordEncoder для сравнения введённого пароля с хранимым хэшем.
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
         user.setRole(role);
 

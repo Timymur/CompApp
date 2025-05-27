@@ -13,7 +13,16 @@
 
     <header th:replace="blocks/header :: header"></header>
     
-    <div class="main-grid">
+
+    <div class="block" th:if="${station == null}"> 
+            <div class="block-title" > <a th:if="${user.role == 'Начальник'}" href="/addStation">Добавить станцию</a></div>
+            <form th:action="@{/joinToStation}" method="get">
+              <h3 th:text="${nullStation}"></h3>
+              <button type="submit">Присоединиться к станции</button>
+            </form>  
+
+    </div>
+    <div class="main-grid" th:if="${station != null}" >
 
       <div class="block">
         <div id="stationLink" th:if="${station != null}">
@@ -28,13 +37,6 @@
               </ul>
           </div>
         </div>
-        <div  th:if="${station == null}">
-          <div class="block-title" > <a th:if="${user.role == 'Начальник'}" href="/addStation">Добавить станцию</a></div>
-            <form th:action="@{/joinToStation}" method="get">
-              <h3 th:text="${nullStation}"></h3>
-              <button type="submit">Присоединиться к станции</button>
-            </form>  
-        </div>
       </div>
 
       <div class="block ">
@@ -48,7 +50,8 @@
             </tr>
         </table>
 
-        <p th:if="${compressors == null or #lists.isEmpty(compressors)}">На этой станции нет компрессоров</p>
+        <p th:if="${(compressors == null or #lists.isEmpty(compressors))}">На этой станции нет компрессоров</p>
+
 
       </div>
 

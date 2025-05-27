@@ -45,19 +45,27 @@ public class UserController {
 
 	@GetMapping("/changeData")
 	public String changeData(Model model) {
+
+		User user = userService.GetCurrentUser();
+		model.addAttribute("user", user);
 		model.addAttribute("title", "Изменение данных");
 		return "changeData";
 	}
 
 	@PostMapping("/changeData")
 	public String PostChangeData(@RequestParam String name, @RequestParam String surname, @RequestParam String login,
-	 							  @RequestParam String password, @RequestParam String role, Model model) {
+	 							  @RequestParam String password, @RequestParam String checkPassword, @RequestParam String role, Model model) {
 		
 		User user = userService.GetCurrentUser();
-		if ((userService.findByLogin(login) != null) && (user.getLogin() != login)) {
+		if ((userService.findByLogin(login) != null) && (!user.getLogin().equals(login))) {
 			model.addAttribute("errorMessage", "Пользователь с таким логином уже существует");
 			return "changeData"; 
 		}
+
+		// if(!password.equals(checkPassword)){
+		// 	model.addAttribute("errorMessage", "Пароли не совпадают");
+		// 	return "changeData"; 
+		// }
 		
 		userService.changeData(user, name, surname, login, password, role );
 		return "redirect:/profile"; 

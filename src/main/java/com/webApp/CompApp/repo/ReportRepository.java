@@ -18,7 +18,7 @@ public interface ReportRepository extends  JpaRepository <Report, Long> {
 
     Optional<Report> findFirstByCompressorIdOrderByIdDesc(Long compressorId);
 
-    @Query("SELECT r FROM Report r WHERE r.compressor.id = :compressorId ORDER BY r.id DESC")
+    @Query("SELECT r FROM Report r WHERE r.compressor.id = :compressorId ORDER BY r.id")
     List<Report> findTopByCompressorIdOrderByIdDesc(@Param("compressorId") Long compressorId, PageRequest pageable);
 }
 

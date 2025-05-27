@@ -83,7 +83,7 @@ public class CompressorController {
         Compressor compressor = new Compressor(modelCompr, number, station);
         compressorService.save(compressor);
 
-		return "redirect:/station";
+		return "redirect:/";
 		
 	}
 

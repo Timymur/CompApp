@@ -67,18 +67,26 @@ public class ReportController {
         WorkShift smena = smenaService.findActiveByWorkerId(user.getId()).orElse(null);
         Compressor compressor = compressorService.findById(compressor_id).orElse(null);
         
-
-        
         try{
-            double workingTime = Double.parseDouble(working_time);
-            double dewPoint = Double.parseDouble(dew_point);
-            double vibrationValue = Double.parseDouble(vibration);
-            double oilPressure = Double.parseDouble(oil_pressure);
-            double coolantTemp = Double.parseDouble(coolant_temp);
-            double gasPollution = Double.parseDouble(gas_pollution);
+            Double workingTime = Double.parseDouble(working_time);
+            Double dewPoint = Double.parseDouble(dew_point);
+            Double vibrationValue = Double.parseDouble(vibration);
+            Double oilPressure = Double.parseDouble(oil_pressure);
+            Double coolantTemp = Double.parseDouble(coolant_temp);
+            Double gasPollution = Double.parseDouble(gas_pollution);
 
-            if(workingTime < 0) { // Больше предыдущего значения
+            Double lastReportWorkingTime = null;
+            Report lastReport = reportService.findLastReportByCompressorId(compressor_id);
+            if (lastReport != null) {
+                 lastReportWorkingTime = lastReport.getWorking_time();
+            }
+            
+            if( (lastReportWorkingTime != null) &&(workingTime < lastReportWorkingTime)) { // Больше предыдущего значения
                 model.addAttribute("errorMessage", "Неправильное время работы компрессора");
+                return "writeReport"; 
+            }
+            if((oilPressure < 0) || (vibrationValue < 0) || (gasPollution < 0) || (workingTime < 0)){
+                model.addAttribute("errorMessage", "Вибрация, время работы компрессора,  давление или загазованность не могут быть меньше нуля");
                 return "writeReport"; 
             }
 

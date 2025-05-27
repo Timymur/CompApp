@@ -9,6 +9,13 @@ let reports = window.reports || [];
     let working_time = reports.map(r => r.working_time);
 
 
+
+    function isLastValueError(data, min, max) {
+    const lastValue = data[data.length - 1];
+    return lastValue < min || lastValue > max;
+    }
+
+    let isError = isLastValueError(coolant_temp, -20, 0) ; 
     new Chart(document.getElementById('coolant_temp'), {
         type: 'line',
         data: {
@@ -16,9 +23,9 @@ let reports = window.reports || [];
             datasets: [{
                 label: 'Температура охлаждающей жикости, С',
                 data: coolant_temp,
-                borderColor: '#42a5f5',
-                backgroundColor: 'rgba(66,165,245,0.1)',
-                fill: true,
+                borderColor: isError ? '#ff0000' : '#42a5f5',
+                backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
+                fill: { target: 'start' },
                 tension: 0.3
             }]
         },
@@ -27,12 +34,12 @@ let reports = window.reports || [];
             plugins: { legend: { display: true } },
             scales: {
                 x: {ticks: {display: false }},
-                y: {min: -20,  max: 0,}
+                y: {min: -40,  max: 10}
             }
         }
     });
 
-    
+    isError = isLastValueError(oil_pressure, 4, 6) ; 
     new Chart(document.getElementById('oil_pressure'), {
         type: 'line',
         data: {
@@ -40,9 +47,9 @@ let reports = window.reports || [];
             datasets: [{
                 label: 'Давление масла, бар',
                 data: oil_pressure,
-                borderColor: '#42a5f5',
-                backgroundColor: 'rgba(66,165,245,0.1)',
-                fill: true,
+                borderColor: isError ? '#ff0000' : '#42a5f5',
+                backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
+                fill: { target: 'start' },
                 tension: 0.3
             }]
         },
@@ -51,11 +58,12 @@ let reports = window.reports || [];
             plugins: { legend: { display: true } },
             scales: {
                 x: {ticks: {display: false }},
-                y: {min: 3.5,  max: 6.5,}
+                y: {min: 3.5,  max: 6.5}
             }
         }
     });
 
+    isError = isLastValueError(gas_pollution, 0, 10) ; 
     new Chart(document.getElementById('gas_pollution'), {
         type: 'line',
         data: {
@@ -63,9 +71,9 @@ let reports = window.reports || [];
             datasets: [{
                 label: 'Загазованность, %',
                 data: gas_pollution,
-                borderColor: '#42a5f5',
-                backgroundColor: 'rgba(66,165,245,0.1)',
-                fill: true,
+                borderColor: isError ? '#ff0000' : '#42a5f5',
+                backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
+                fill: { target: 'start' },
                 tension: 0.3
             }]
         },
@@ -74,11 +82,13 @@ let reports = window.reports || [];
             plugins: { legend: { display: true } },
             scales: {
                 x: {ticks: {display: false }},
-                y: {min: 0,  max: 20,}
+                y: {min: 0,  max: 20}
             }
         }
     });
 
+
+    isError = isLastValueError(dew_point, -90, -45) ; 
     new Chart(document.getElementById('dew_point'), {
         type: 'line',
         data: {
@@ -86,10 +96,10 @@ let reports = window.reports || [];
             datasets: [{
                 label: 'Точка росы, С',
                 data: dew_point,
-                borderColor: '#42a5f5',
-                backgroundColor: 'rgba(66,165,245,0.1)',
-                fill: true,
-                tension: 0.3
+                borderColor: isError ? '#ff0000' : '#42a5f5',
+                backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
+                fill: { target: 'start' },
+                tension: 0.3,
             }]
         },
         options: {
@@ -97,11 +107,12 @@ let reports = window.reports || [];
             plugins: { legend: { display: true } },
             scales: {
                 x: {ticks: {display: false }},
-                y: {min: -90,  max: -35,}
+                y: {min: -90,  max: -35}
             }
         }
     });
 
+    isError = isLastValueError(vibration, 0, 10) ;
     new Chart(document.getElementById('vibration'), {
         type: 'line',
         data: {
@@ -109,9 +120,9 @@ let reports = window.reports || [];
             datasets: [{
                 label: 'Вибрация, %',
                 data: vibration,
-                borderColor: '#42a5f5',
-                backgroundColor: 'rgba(66,165,245,0.1)',
-                fill: true,
+                borderColor: isError ? '#ff0000' : '#42a5f5',
+                backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
+                fill: { target: 'start' },
                 tension: 0.3
             }]
         },
@@ -120,7 +131,7 @@ let reports = window.reports || [];
             plugins: { legend: { display: true } },
             scales: {
                 x: {ticks: {display: false }},
-                y: {min: 0,  max: 20 ,}
+                y: {min: 0,  max: 10 }
             }
         }
     });

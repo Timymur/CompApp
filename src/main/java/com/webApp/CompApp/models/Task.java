@@ -14,8 +14,8 @@ public class Task {
     private Long id;
 
     @ManyToOne 
-    @JoinColumn(name = "worker_id") 
-    private User worker;
+    @JoinColumn(name = "station_id") 
+    private Station station;
 
     @ManyToOne 
     @JoinColumn(name = "boss_id") 
@@ -28,8 +28,8 @@ public class Task {
     public Task (){
 
     }
-    public Task(User worker, User boss, String theme, String text) {
-        this.worker = worker;
+    public Task(Station station, User boss, String theme, String text) {
+        this.station = station;
         this.boss = boss;
         this.theme = theme;
         this.text = text;
@@ -44,12 +44,12 @@ public class Task {
         this.id = id;
     }
 
-    public User getWorker() {
-        return worker;
+    public Station getStation() {
+        return station;
     }
 
-    public void setWorker(User worker) {
-        this.worker = worker;
+    public void setStation(Station station) {
+        this.station = station;
     }
 
     public User getBoss() {

@@ -55,7 +55,7 @@ public class MainController {
 
         Station station = user.getStation();
 		if (station == null) {
-			model.addAttribute("nullStation", "Вы не принадлежите ни к одной станции");
+			model.addAttribute("nullStation", "Вы не относитесь ни к одной станции");
 			return "home"; 
 		}
         
