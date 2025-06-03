@@ -49,10 +49,7 @@
               <td th:text="${lastReportsMap[compressor.id] != null ? lastReportsMap[compressor.id].error : 'Нет ошибок'}"></td>
             </tr>
         </table>
-
         <p th:if="${(compressors == null or #lists.isEmpty(compressors))}">На этой станции нет компрессоров</p>
-
-
       </div>
 
 
@@ -69,14 +66,11 @@
 
 
       <div class="block ">
-        <div class="block-title">Задания</div>
-        <ul class="menu-list">
-          <li>Первое задание</li>
-          <li>Второе задание</li>
-          <li>Третье задание</li>
-        </ul>
+        <div class="block-title">Задания <a href="/archiveTask">Архив заданий</a><a th:if="${user.role == 'Начальник'}" href="/addTask">Добавить задание</a></div>
+         <ul class="stats-list" th:each="task : ${tasks}" >
+                <li th:text="${task.theme} " th:attr="data-href=@{'/task/' + ${task.id}}"></li>
+          </ul>
       </div>
-      
     </div>
   </div>
 
@@ -85,7 +79,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(function(){
-      $('.data-table tr[data-href]').click(function(){
+      $('[data-href]').click(function(){
         window.location = $(this).data('href');
       });
     });

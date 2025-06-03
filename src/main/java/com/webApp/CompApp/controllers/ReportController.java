@@ -38,7 +38,7 @@ public class ReportController {
 
 
     @GetMapping("/writeReport")
-	public String WriteReport(Model model) {
+	public String writeReport(Model model) {
 
         User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/";      
@@ -57,40 +57,41 @@ public class ReportController {
 	}
 
     @PostMapping("/writeReport")
-	public String PostWriteReport(@RequestParam Long compressor_id, @RequestParam String coolant_temp, 
-		                         @RequestParam String dew_point, @RequestParam String gas_pollution,
-	 							  @RequestParam String oil_pressure, @RequestParam String vibration, 
-                                  @RequestParam String working_time, @RequestParam boolean in_work,
+	public String postWriteReport(@RequestParam Long compressorId, @RequestParam String coolantTemp, 
+		                         @RequestParam String dewPoint, @RequestParam String gasPollution,
+	 							  @RequestParam String oilPressure, @RequestParam String vibration, 
+                                  @RequestParam String workingTime, @RequestParam boolean inWork,
                                   @RequestParam String error,  Model model) {
     	
         User user = userService.GetCurrentUser();
-        WorkShift smena = workShiftService.findActiveByWorkerId(user.getId()).orElse(null);
-        Compressor compressor = compressorService.findById(compressor_id).orElse(null);
+        WorkShift workShift = workShiftService.findActiveByWorkerId(user.getId()).orElse(null);
+        Compressor compressor = compressorService.findById(compressorId).orElse(null);
+        model.addAttribute("compressor", compressor);
         
         try{
-            Double workingTime = Double.parseDouble(working_time);
-            Double dewPoint = Double.parseDouble(dew_point);
+            Double workingTimeValue = Double.parseDouble(workingTime);
+            Double dewPointValue = Double.parseDouble(dewPoint);
             Double vibrationValue = Double.parseDouble(vibration);
-            Double oilPressure = Double.parseDouble(oil_pressure);
-            Double coolantTemp = Double.parseDouble(coolant_temp);
-            Double gasPollution = Double.parseDouble(gas_pollution);
+            Double oilPressureValue = Double.parseDouble(oilPressure);
+            Double coolantTempValue = Double.parseDouble(coolantTemp);
+            Double gasPollutionValue = Double.parseDouble(gasPollution);
 
             Double lastReportWorkingTime = null;
-            Report lastReport = reportService.findLastReportByCompressorId(compressor_id);
+            Report lastReport = reportService.findLastReportByCompressorId(compressorId);
             if (lastReport != null) {
-                 lastReportWorkingTime = lastReport.getWorking_time();
+                 lastReportWorkingTime = lastReport.getWorkingTime();
             }
             
-            if( (lastReportWorkingTime != null) &&(workingTime < lastReportWorkingTime)) { // Больше предыдущего значения
+            if( (lastReportWorkingTime != null) &&(workingTimeValue < lastReportWorkingTime)) { // Больше предыдущего значения
                 model.addAttribute("errorMessage", "Неправильное время работы компрессора");
                 return "writeReport"; 
             }
-            if((oilPressure < 0) || (vibrationValue < 0) || (gasPollution < 0) || (workingTime < 0)){
+            if((oilPressureValue < 0) || (vibrationValue < 0) || (gasPollutionValue < 0) || (workingTimeValue < 0)){
                 model.addAttribute("errorMessage", "Вибрация, время работы компрессора,  давление или загазованность не могут быть меньше нуля");
                 return "writeReport"; 
             }
 
-            Report report = new Report(user, smena, compressor, workingTime, dewPoint, vibrationValue, oilPressure, coolantTemp, gasPollution, in_work, error);
+            Report report = new Report(user, workShift, compressor, workingTimeValue, dewPointValue, vibrationValue, oilPressureValue, coolantTempValue, gasPollutionValue, inWork, error);
             reportService.save(report);
             return "redirect:/";
             

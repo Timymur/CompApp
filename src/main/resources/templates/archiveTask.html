@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${title}"></title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="dashboard">
+    <header th:replace="blocks/header :: header"></header>
+   
+    <div class="main-grid" >
+        <div class="block" th:each="task : ${tasks}">
+        
+             <h1 th:text="${task.theme}"></h1>
+             <div th:text="${task.text}"></div>
+             
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

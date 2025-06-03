@@ -29,7 +29,7 @@ public class UserController {
     }
 
 	@GetMapping("/profile")
-	public String Profile(Model model) {
+	public String profile(Model model) {
 
 		User user = userService.GetCurrentUser();
         if (user == null) return "authorization"; 
@@ -53,7 +53,7 @@ public class UserController {
 	}
 
 	@PostMapping("/changeData")
-	public String PostChangeData(@RequestParam String name, @RequestParam String surname, @RequestParam String login,
+	public String postChangeData(@RequestParam String name, @RequestParam String surname, @RequestParam String login,
 	 							  @RequestParam String password, @RequestParam String checkPassword, @RequestParam String role, Model model) {
 		
 		User user = userService.GetCurrentUser();
@@ -75,13 +75,13 @@ public class UserController {
 
 
     @GetMapping("/registration")
-	public String Registration(Model model) {
+	public String registration(Model model) {
 		model.addAttribute("title", "Регистрация");
 		return "registration";
 	}
 
 	@PostMapping("/registration")
-	public String RegistrationAct(@RequestParam String name, @RequestParam String surname, @RequestParam String login,
+	public String registrationAct(@RequestParam String name, @RequestParam String surname, @RequestParam String login,
 	 							  @RequestParam String password, @RequestParam String role, Model model) {
 		
 		if (userService.findByLogin(login) != null) {
@@ -99,7 +99,7 @@ public class UserController {
 
 
 	@GetMapping("/authorization")
-	public String Authorization(Model model) {
+	public String authorization(Model model) {
 		model.addAttribute("title", "Авторизация");
 		return "authorization";
 	}

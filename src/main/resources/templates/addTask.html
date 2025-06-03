@@ -13,22 +13,18 @@
 
     <header th:replace="blocks/header :: header"></header>
     
-    <h1>Выберите компрессор</h1>
+    <h1>Добавление задания</h1>
     
-    <form action="/choiceCompressor" method="post" >
+    <form action="/addTask" method="post">
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-      <select name="compressorId" required>
-        <option value="" disabled selected  >Выберите компрессор</option>
-        <option th:each="compressor : ${compressors}" 
-                th:value="${compressor.id}" 
-                th:text="'Компрессор №' + ${compressor.number} + ' - ' + ${compressor.model}"></option>
-      </select>
-
+      <input type="text" name="theme" placeholder="Введите тему" required>
+      <textarea  style="resize: none;"     name="text" placeholder="Введите содержание задания" required rows="4" ></textarea>
 
       
+      
       <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
-      <button type="submit">Выбрать</button>
+      <button type="submit">Добавить</button>
     </form>
     
   </div>

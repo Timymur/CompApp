@@ -17,7 +17,7 @@ public class WorkShift {
     @GeneratedValue(strategy = GenerationType.AUTO)// автоинкремент
     private Long id;
 
-    private String time_of_day; 
+    private String timeOfDay; 
     private LocalDate date; // 2025-05-02
 
     private boolean active;
@@ -34,8 +34,8 @@ public class WorkShift {
 
     }
     
-    public WorkShift(String time_of_day, LocalDate date, Station station, User user){
-        this.time_of_day = time_of_day;
+    public WorkShift(String timeOfDay, LocalDate date, Station station, User user){
+        this.timeOfDay = timeOfDay;
         this.date = date;
         this.station = station;
         this.user = user;
@@ -59,10 +59,10 @@ public class WorkShift {
     }
 
     public String getTimeOfDay(){
-        return time_of_day;
+        return timeOfDay;
     }
-    public void settime_of_day(String time_of_day){
-        this.time_of_day = time_of_day;
+    public void setTimeOfDay(String timeOfDay){
+        this.timeOfDay = timeOfDay;
     }
 
     public LocalDate getDate(){

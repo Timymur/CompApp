@@ -28,12 +28,12 @@ public class Report {
     private Compressor compressor;
 
 
-    private double working_time; 
-    private double dew_point; 
+    private double workingTime; 
+    private double dewPoint; 
     private double vibration;
-    private double oil_pressure;
-    private double coolant_temp;
-    private double gas_pollution;
+    private double oilPressure;
+    private double coolantTemp;
+    private double gasPollution;
     private boolean inWork;
     private String error;
 
@@ -41,16 +41,16 @@ public class Report {
 
     }
     
-    public Report( User user, WorkShift workShift, Compressor compressor, double working_time, double dew_point, double vibration, double oil_pressure, double coolant_temp, double gas_pollution, boolean inWork, String error ){
+    public Report( User user, WorkShift workShift, Compressor compressor, double workingTime, double dewPoint, double vibration, double oilPressure, double coolantTemp, double gasPollution, boolean inWork, String error ){
         this.user = user;
         this.workShift = workShift;
         this.compressor = compressor;
-        this.working_time = working_time;
-        this.dew_point= dew_point;
+        this.workingTime = workingTime;
+        this.dewPoint= dewPoint;
         this.vibration = vibration;
-        this.oil_pressure = oil_pressure;
-        this.coolant_temp = coolant_temp;
-        this.gas_pollution = gas_pollution;
+        this.oilPressure = oilPressure;
+        this.coolantTemp = coolantTemp;
+        this.gasPollution = gasPollution;
         this.inWork = inWork;
         this.error = error;
     }
@@ -87,20 +87,20 @@ public class Report {
         this.compressor = compressor;
     }
 
-    public double getWorking_time() {
-        return working_time;
+    public double getWorkingTime() {
+        return workingTime;
     }
 
-    public void setWorking_time(double working_time) {
-        this.working_time = working_time;
+    public void setWorkingTime(double workingTime) {
+        this.workingTime = workingTime;
     }
 
-    public double getDew_point() {
-        return dew_point;
+    public double getDewPoint() {
+        return dewPoint;
     }
 
-    public void setDew_point(double dew_point) {
-        this.dew_point = dew_point;
+    public void setDewPoint(double dewPoint) {
+        this.dewPoint = dewPoint;
     }
 
     public double getVibration() {
@@ -111,28 +111,28 @@ public class Report {
         this.vibration = vibration;
     }
 
-    public double getOil_pressure() {
-        return oil_pressure;
+    public double getOilPressure() {
+        return oilPressure;
     }
 
-    public void setOil_pressure(double oil_pressure) {
-        this.oil_pressure = oil_pressure;
+    public void setOilPressure(double oilPressure) {
+        this.oilPressure = oilPressure;
     }
 
-    public double getCoolant_temp() {
-        return coolant_temp;
+    public double getCoolantTemp() {
+        return coolantTemp;
     }
 
-    public void setCoolant_temp(double coolant_temp) {
-        this.coolant_temp = coolant_temp;
+    public void setCoolantTemp(double coolantTemp) {
+        this.coolantTemp = coolantTemp;
     }
 
-    public double getGas_pollution() {
-        return gas_pollution;
+    public double getGasPollution() {
+        return gasPollution;
     }
 
-    public void setGas_pollution(double gas_pollution) {
-        this.gas_pollution = gas_pollution;
+    public void setGasPollution(double gasPollution) {
+        this.gasPollution = gasPollution;
     }
 
     public boolean isInWork() {

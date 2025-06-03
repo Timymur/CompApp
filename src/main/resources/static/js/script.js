@@ -9,8 +9,8 @@ function profile() {
 }
 
 
-const inWorkCompressor = document.getElementById('in_work');
-const errorCompressor = document.getElementById('error_compressor');
+const inWorkCompressor = document.getElementById('inWork');
+const errorCompressor = document.getElementById('errorCompressor');
 
 
 function toggleErrorCompressor() {

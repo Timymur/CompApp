@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 import com.webApp.CompApp.models.Report;
@@ -28,21 +28,22 @@ import com.webApp.CompApp.repo.UserRepository;
 import com.webApp.CompApp.services.CompressorService;
 import com.webApp.CompApp.services.ReportService;
 import com.webApp.CompApp.services.StationService;
+import com.webApp.CompApp.services.TaskService;
 import com.webApp.CompApp.services.UserService;
 
 @Controller
 public class MainController {
 
-	private final UserService userService;
-    // private final StationService stationService;
+	private final UserService userService;;
 	private final CompressorService compressorService;
 	private final ReportService reportService;
+	private final TaskService taskService;
 
-	public MainController(UserService userService, StationService stationService, CompressorService compressorService, ReportService reportService) {
+	public MainController(UserService userService, CompressorService compressorService, ReportService reportService, TaskService taskService) {
 		this.userService = userService;
-		// this.stationService = stationService;
 		this.compressorService = compressorService;
 		this.reportService = reportService;
+		this.taskService = taskService;
     }
 
 	@GetMapping("/")
@@ -93,9 +94,11 @@ public class MainController {
 			model.addAttribute("compressors", compressors);
 		}
         
+		List<Task> tasks = taskService.findByStationIdAndStatusFalse(station.getId());
+
+		model.addAttribute("tasks", tasks);
         model.addAttribute("workers", workersWithoutBoss);
         model.addAttribute("station", station);
-		
 
 		model.addAttribute("title", "Главная страница");
 		return "home";

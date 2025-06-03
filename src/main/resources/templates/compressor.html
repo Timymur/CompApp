@@ -10,21 +10,21 @@
 <div class="dashboard">
     <header th:replace="blocks/header :: header"></header>
     <div class="block-title" th:text="'Компрессор ' + ${compressor.number}"></div>
-    <p th:text="' Наработка: ' + ${reports[0].working_time} + ' часов' "></p>
-    <div class="main-grid">
-        
+    <p th:text="' Наработка: ' + ${reports[reports.size() - 1].workingTime} + ' часов' "></p>
 
+
+    <div class="main-grid">
         <div class="block">
-            <canvas id="coolant_temp" ></canvas>
+            <canvas id="coolantTemp" ></canvas>
         </div>
         <div class="block">
-            <canvas id="oil_pressure" ></canvas>
+            <canvas id="oilPressure" ></canvas>
         </div>
         <div class="block">
-            <canvas id="gas_pollution" ></canvas>
+            <canvas id="gasPollution" ></canvas>
         </div>
         <div class="block">
-            <canvas id="dew_point" ></canvas>
+            <canvas id="dewPoint" ></canvas>
         </div>
         <div class="block">
             <canvas id="vibration" ></canvas>

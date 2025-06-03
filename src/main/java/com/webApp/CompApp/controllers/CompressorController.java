@@ -55,14 +55,14 @@ public class CompressorController {
 	}
 
     @GetMapping("/addCompressor")
-	public String AddCompressor(Model model) {
+	public String addCompressor(Model model) {
         
 		model.addAttribute("title", "Добавить компрессор");
 		return "addCompressor";
 	}
 
     @PostMapping("/addCompressor")
-	public String AddCompressorPost(@RequestParam String modelCompr, @RequestParam int number, Model model) {
+	public String addCompressorPost(@RequestParam String modelCompr, @RequestParam int number, Model model) {
 
         User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/"; 
@@ -98,7 +98,7 @@ public class CompressorController {
         Station station = user.getStation();
         if (station == null)   return "redirect:/";
         
-
+        
         List<Compressor> compressors = compressorService.findByStationId(station.getId());
         model.addAttribute("compressors", compressors);
 		
@@ -108,10 +108,15 @@ public class CompressorController {
 	}
 
     @PostMapping("/choiceCompressor")
-	public String handlChoiceCompressor(@RequestParam("compressorId") Long compressorId, Model model) {
+	public String postChoiceCompressor(@RequestParam Long compressorId, Model model) {
 		
     	User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/"; 
+        
+        if(compressorId == null){
+                model.addAttribute("errorMessage", "Выберите компрессор!!!");
+				return "choiceCompressor"; 
+        }
 
 		WorkShift workShift = workShiftService.findActiveByWorkerId(user.getId()).orElse(null);
         

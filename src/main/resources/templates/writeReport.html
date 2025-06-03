@@ -17,21 +17,21 @@
     
     <form action="/writeReport" method="post" >
       <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-      <input type="hidden" th:name="compressor_id" th:value="${compressor.id}" />
+      <input type="hidden" name="compressorId" th:value="${compressor.id}" />
       
-      <input type="text" name="coolant_temp" placeholder="Введите температуру охдаждающей жидкости" required/>
-      <input type="text" name="dew_point" placeholder="Введите индекс влажности газа"  required/>
-      <input type="text" name="gas_pollution" placeholder="Введите процент загазованности" required />
-      <input type="text" name="oil_pressure" placeholder="Введите давление масла"  required/>
+      <input type="text" name="coolantTemp" placeholder="Введите температуру охдаждающей жидкости" required/>
+      <input type="text" name="dewPoint" placeholder="Введите индекс влажности газа"  required/>
+      <input type="text" name="gasPollution" placeholder="Введите процент загазованности" required />
+      <input type="text" name="oilPressure" placeholder="Введите давление масла"  required/>
       <input type="text" name="vibration" placeholder="Введите процент вибрации"  required/>
-      <input type="text" name="working_time" placeholder="Введите наработку часов"  required/>
+      <input type="text" name="workingTime" placeholder="Введите наработку часов"  required/>
       <div class="checkbox-group">
         <label for="in_work">Компрессор в работе</label>
-        <input type="checkbox" id="in_work" name="in_work"  value="true" checked />   
-        <input type="hidden" name="in_work" value="false" /> 
+        <input type="checkbox" id="inWork" name="inWork"  value="true" checked />   
+        <input type="hidden" name="inWork" value="false" /> 
            
       </div>
-      <input type="text" id="error_compressor" name="error" placeholder="Введите причину останова компрессора" style="display:none;" />
+      <input type="text" id="errorCompressor" name="error" placeholder="Введите причину останова компрессора" style="display:none;" />
       
       <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
       <button type="submit">Внести</button>

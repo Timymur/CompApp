@@ -59,7 +59,7 @@ public class WorkShiftController {
 	}
 
     @PostMapping("/openWorkShift")
-	public String PostOpenWorkShift(@RequestParam LocalDate date, @RequestParam String timeOfDay, Model model) {
+	public String postOpenWorkShift(@RequestParam LocalDate date, @RequestParam String timeOfDay, Model model) {
 
         User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/"; 
@@ -107,7 +107,7 @@ public class WorkShiftController {
 	}
 
     @PostMapping("/closeWorkShift")
-	public String PostCloseWorkShift(Model model) {
+	public String postCloseWorkShift(Model model) {
 
         User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/"; 

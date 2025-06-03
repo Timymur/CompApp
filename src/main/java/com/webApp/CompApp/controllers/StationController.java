@@ -30,28 +30,22 @@ import com.webApp.CompApp.models.User;
 @Controller
 public class StationController {
 
-	//private final ReportService reportService;
 	private final UserService userService;
     private final StationService stationService;
-	//private final CompressorService compressorService;
 
-
-    public StationController(UserService userService, StationService stationService, CompressorService compressorService, ReportService reportService) {
+    public StationController(UserService userService, StationService stationService) {
         this.userService = userService;
         this.stationService = stationService;
-		//this.compressorService = compressorService;
-		//this.reportService = reportService;
     }
 
-
 	@GetMapping("/addStation")
-	public String AddStation(Model model) {
+	public String addStation(Model model) {
 		model.addAttribute("title", "Создание станции");
 		return "addStation";
 	}
 
 	@PostMapping("/addStation")
-	public String AddStationPost(@RequestParam String city, @RequestParam int number, Model model) {
+	public String addStationPost(@RequestParam String city, @RequestParam int number, Model model) {
 
 		List<Station> stations = stationService.findByCity(city);
 
@@ -61,14 +55,13 @@ public class StationController {
 				return "addStation"; // возвращаемся на страницу  с ошибкой
 			}
 		}
-		
 		Station station = new Station(city, number);
 		stationService.save(station);
 		return "redirect:/";
 	}
 
 	@GetMapping("/joinToStation")
-	public String JoinToStation(Model model) {
+	public String joinToStation(Model model) {
 
 		List<Station> stations = stationService.findAll(); 
     	model.addAttribute("stations", stations);
@@ -94,14 +87,14 @@ public class StationController {
 	}
 
 	@GetMapping("/outStation")
-	public String OutStation(Model model) {
+	public String outStation(Model model) {
 
 		model.addAttribute("title", "Покинуть станцию");
 		return "outStation";
 	}
 
 	@PostMapping("/outStation")
-	public String PostOutStation() {
+	public String postOutStation() {
 
     	User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/"; 

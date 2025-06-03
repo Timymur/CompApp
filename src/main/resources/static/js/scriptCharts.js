@@ -1,28 +1,25 @@
 let reports = window.reports || [];
 
  let labels = reports.map(r => r.id); 
-    let coolant_temp = reports.map(r => r.coolant_temp);
-    let dew_point = reports.map(r => r.dew_point);
-    let gas_pollution = reports.map(r => r.gas_pollution);
-    let oil_pressure = reports.map(r => r.oil_pressure);
+    let coolantTemp = reports.map(r => r.coolantTemp);
+    let dewPoint = reports.map(r => r.dewPoint);
+    let gasPollution = reports.map(r => r.gasPollution);
+    let oilPressure = reports.map(r => r.oilPressure);
     let vibration = reports.map(r => r.vibration);
-    let working_time = reports.map(r => r.working_time);
-
-
 
     function isLastValueError(data, min, max) {
     const lastValue = data[data.length - 1];
     return lastValue < min || lastValue > max;
     }
 
-    let isError = isLastValueError(coolant_temp, -20, 0) ; 
-    new Chart(document.getElementById('coolant_temp'), {
+    let isError = isLastValueError(coolantTemp, -30, 0) ; 
+    new Chart(document.getElementById('coolantTemp'), {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Температура охлаждающей жикости, С',
-                data: coolant_temp,
+                data: coolantTemp,
                 borderColor: isError ? '#ff0000' : '#42a5f5',
                 backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
                 fill: { target: 'start' },
@@ -39,14 +36,14 @@ let reports = window.reports || [];
         }
     });
 
-    isError = isLastValueError(oil_pressure, 4, 6) ; 
-    new Chart(document.getElementById('oil_pressure'), {
+    isError = isLastValueError(oilPressure, 4, 6) ; 
+    new Chart(document.getElementById('oilPressure'), {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Давление масла, бар',
-                data: oil_pressure,
+                data: oilPressure,
                 borderColor: isError ? '#ff0000' : '#42a5f5',
                 backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
                 fill: { target: 'start' },
@@ -63,14 +60,14 @@ let reports = window.reports || [];
         }
     });
 
-    isError = isLastValueError(gas_pollution, 0, 10) ; 
-    new Chart(document.getElementById('gas_pollution'), {
+    isError = isLastValueError(gasPollution, 0, 10) ; 
+    new Chart(document.getElementById('gasPollution'), {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Загазованность, %',
-                data: gas_pollution,
+                data: gasPollution,
                 borderColor: isError ? '#ff0000' : '#42a5f5',
                 backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
                 fill: { target: 'start' },
@@ -88,14 +85,14 @@ let reports = window.reports || [];
     });
 
 
-    isError = isLastValueError(dew_point, -90, -45) ; 
-    new Chart(document.getElementById('dew_point'), {
+    isError = isLastValueError(dewPoint, -90, -45) ; 
+    new Chart(document.getElementById('dewPoint'), {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
                 label: 'Точка росы, С',
-                data: dew_point,
+                data: dewPoint,
                 borderColor: isError ? '#ff0000' : '#42a5f5',
                 backgroundColor: isError ? 'rgba(224, 11, 11, 0.1)' : 'rgba(66,165,245,0.1)',
                 fill: { target: 'start' },

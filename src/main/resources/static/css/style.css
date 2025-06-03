@@ -55,9 +55,7 @@ body {
 
 
 .header-actions a {
-    /* background: #e3f2fd;
-    border: none;
-    border-radius: 50%; */
+  
     margin-left: 12px;
     width: 38px;
     height: 38px;
@@ -77,9 +75,6 @@ body {
   box-shadow: 0 2px 8px rgba(60, 120, 180, 0.10);
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
 }
 
  
@@ -98,7 +93,15 @@ body {
     grid-template-rows: auto auto;
     gap: 24px;
   }
-  
+
+.main-grid:has(.task) {
+   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
   .block {
     background: #fff;
     border-radius: 16px;
@@ -135,6 +138,7 @@ body {
     background: #b3e5fc;
   }
   
+
   
   .stats-list {
     list-style: none;
@@ -148,6 +152,11 @@ body {
     font-size: 15px;
   }
 
+  li[data-href]:hover {
+    background-color: #f0f4ff;
+    cursor: pointer;
+  }
+  
   .stats-list a{
     text-decoration: none;
     color: black;
@@ -180,19 +189,9 @@ body {
   .data-table tr[data-href]:hover {
     background-color: #f0f4ff;
     cursor: pointer;
-}
-  .menu-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
   }
-  
-  .menu-list li {
-    padding: 12px 0;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 15px;
-  }
-  
+
+ 
   form {
     display: flex;
     flex-direction: column; 
@@ -207,9 +206,11 @@ body {
     margin-right: auto;
   }
   
+  form textarea,
   form input[type="text"],
   form input[type="password"],
   form select {
+    font-family: 'Segoe UI', Arial, sans-serif;
     padding: 12px 14px;
     border: 1px solid #b3e5fc;
     border-radius: 7px;
@@ -221,6 +222,7 @@ body {
     box-sizing: border-box; 
   }
   
+  form textarea,
   form input[type="text"]:focus,
   form input[type="password"]:focus,
   form select:focus {
@@ -244,6 +246,7 @@ body {
   form button:hover{
     transform: scale(1.1);
   }
+
 
   .checkbox-group{
     display: flex;
