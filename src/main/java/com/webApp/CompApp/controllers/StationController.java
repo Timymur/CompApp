@@ -45,7 +45,7 @@ public class StationController {
 	}
 
 	@PostMapping("/addStation")
-	public String addStationPost(@RequestParam String city, @RequestParam int number, Model model) {
+	public String addStationPost(@RequestParam String city, @RequestParam int number, @RequestParam String codeWord, Model model) {
 
 		List<Station> stations = stationService.findByCity(city);
 
@@ -55,7 +55,7 @@ public class StationController {
 				return "addStation"; // возвращаемся на страницу  с ошибкой
 			}
 		}
-		Station station = new Station(city, number);
+		Station station = new Station(city, number, codeWord);
 		stationService.save(station);
 		return "redirect:/";
 	}
@@ -71,17 +71,27 @@ public class StationController {
 	}
 
 	@PostMapping("/joinToStation")
-	public String handleJoinToStation(@RequestParam("stationId") Long stationId) {
+	public String handleJoinToStation(@RequestParam("stationId") Long stationId, @RequestParam String codeWord, Model model) {
 		
 		Station station = stationService.getReferenceById(stationId);
 		
     	User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/"; 
+		if(!codeWord.equals(station.getCodeWord())){
+			model.addAttribute("errorMessage", "Неверное кодовое слово");
+			return "joinToStation"; 
+		}
+
+		boolean hasBoss = userService.findByStationId(station.getId()).stream()
+            .anyMatch(worker -> "Начальник".equals(worker.getRole()));
+    	if ("Начальник".equals(user.getRole()) && hasBoss) {
+			model.addAttribute("errorMessage", "На станции уже есть начальник");
+			return "joinToStation"; 
+		}
 
 		if(user.getStation() == null){
 			user.setStation(station);
 			userService.save(user);
-
 		}
     	return "redirect:/";
 	}
@@ -98,6 +108,8 @@ public class StationController {
 
     	User user = userService.GetCurrentUser();
         if (user == null) return "redirect:/"; 
+
+		if(user.getInWork()) return "redirect:/";
 
 		if(user.getStation() != null){
 			user.setStation(null);

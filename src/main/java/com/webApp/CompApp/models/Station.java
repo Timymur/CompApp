@@ -16,14 +16,16 @@ public class Station {
 
     private String city;
     private int number;
+    private String codeWord;
 
     public Station(){
 
     }
     
-    public Station(String city, int number){
+    public Station(String city, int number, String codeWord){
         this.city = city;
         this.number = number;
+        this.codeWord = codeWord;
     }
 
     public Long getId(){
@@ -45,6 +47,14 @@ public class Station {
     }
     public void setNumber(int number){
         this.number = number;
+    }
+
+    public String getCodeWord(){
+        return codeWord;
+    }
+
+    public void setCodeWord(String codeWord){
+        this.codeWord = codeWord;
     }
     
 }

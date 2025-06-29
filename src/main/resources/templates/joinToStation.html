@@ -24,6 +24,7 @@
                 th:value="${station.id}" 
                 th:text="${station.city} + ' - ' + ${station.number}"></option>
       </select>
+       <input type="text" name="codeWord" placeholder="Введите кодовое слово" required>
       
       <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
       <button type="submit">Присоединиться</button>

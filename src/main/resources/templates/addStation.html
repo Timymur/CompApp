@@ -20,6 +20,7 @@
 
       <input type="text" name="city" placeholder="Введите город" required>
       <input type="text" name="number" placeholder="Введите номер станции" required>
+      <input type="text" name="codeWord" placeholder="Введите кодовое слово" required>
       
       <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;"></div>
       <button type="submit">Создать</button>
