@@ -40,7 +40,7 @@
       </div>
 
       <div class="block ">
-        <div class="block-title" ><span>Оборудование</span> <a href="/addCompressor">Добавить</a></div>
+        <div class="block-title" ><span>Оборудование</span>  <a th:if="${user.role == 'Начальник'}" href="/addCompressor">Добавить компрессор</a></div>
         <table class="data-table" th:if="${compressors != null}">
             <tr><th>Наименование</th><th>Статус</th><th>Ошибка</th></tr>
             <tr th:each="compressor : ${compressors}" th:attr="data-href=@{'/compressor/' + ${compressor.id}}">
@@ -67,8 +67,8 @@
 
       <div class="block ">
         <div class="block-title">Задания <a href="/archiveTask">Архив заданий</a><a th:if="${user.role == 'Начальник'}" href="/addTask">Добавить задание</a></div>
-         <ul class="stats-list" th:each="task : ${tasks}" >
-                <li th:text="${task.theme} " th:attr="data-href=@{'/task/' + ${task.id}}"></li>
+         <ul class="stats-list" th:each="task, number : ${tasks}" >
+                <li th:text="${number.index + 1} + '. ' + ${task.theme}" th:attr="data-href=@{'/task/' + ${task.id}}"></li>
           </ul>
       </div>
     </div>
