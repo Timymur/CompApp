@@ -20,5 +20,9 @@ public interface ReportRepository extends  JpaRepository <Report, Long> {
 
     @Query("SELECT r FROM Report r WHERE r.compressor.id = :compressorId ORDER BY r.id")
     List<Report> findTopByCompressorIdOrderByIdDesc(@Param("compressorId") Long compressorId, PageRequest pageable);
+
+    @Query("SELECT r FROM Report r JOIN FETCH r.workShift WHERE r.compressor.id = :compressorId ORDER BY r.id")
+    List<Report> findTop15ReportsByCompressorIdWithShift(@Param("compressorId") Long compressorId);
+
 }
 

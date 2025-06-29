@@ -46,5 +46,10 @@ public class ReportService {
         return reports;
     }
 
+    public List<Report> findTop15ReportsByCompressorIdWithShift(Long compressorId){
+        List<Report> reports = reportRepository.findTop15ReportsByCompressorIdWithShift(compressorId);
+        return reports;
+    }
+
 
 }

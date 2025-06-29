@@ -146,7 +146,7 @@ public class CompressorController {
         
         Compressor compressor = compressorService.findById(compressorId).orElse(null);
 
-        List <Report> reports = reportService.findTop15ReportsByCompressorId(compressorId);
+        List <Report> reports = reportService.findTop15ReportsByCompressorIdWithShift(compressorId);
 
         model.addAttribute("reports", reports);
         model.addAttribute("compressor", compressor);

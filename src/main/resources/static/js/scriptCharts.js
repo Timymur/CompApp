@@ -1,6 +1,12 @@
-let reports = window.reports || [];
+    let reports = window.reports || [];
 
- let labels = reports.map(r => r.id); 
+    let labels = reports.map(r => {
+        const date = new Date(r.workShift.date);
+        const day = date.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
+        const shift = r.workShift.timeOfDay === 'afternoon' ? '08:00' : '20:00'; 
+        return `${day}\n ${shift}`;
+    });
+
     let coolantTemp = reports.map(r => r.coolantTemp);
     let dewPoint = reports.map(r => r.dewPoint);
     let gasPollution = reports.map(r => r.gasPollution);
@@ -30,7 +36,11 @@ let reports = window.reports || [];
             responsive: true,
             plugins: { legend: { display: true } },
             scales: {
-                x: {ticks: {display: false }},
+                x: {ticks: {
+                            maxRotation: 90,  
+                            minRotation: 45,  
+                            autoSkip: true}
+                    },
                 y: {min: -40,  max: 10}
             }
         }
@@ -54,7 +64,11 @@ let reports = window.reports || [];
             responsive: true,
             plugins: { legend: { display: true } },
             scales: {
-                x: {ticks: {display: false }},
+                x: {ticks: {
+                            maxRotation: 90,  
+                            minRotation: 45,  
+                            autoSkip: true}
+                    },
                 y: {min: 3.5,  max: 6.5}
             }
         }
@@ -78,7 +92,11 @@ let reports = window.reports || [];
             responsive: true,
             plugins: { legend: { display: true } },
             scales: {
-                x: {ticks: {display: false }},
+                x: {ticks: {
+                            maxRotation: 90,  
+                            minRotation: 45,  
+                            autoSkip: true}
+                    },
                 y: {min: 0,  max: 20}
             }
         }
@@ -103,7 +121,11 @@ let reports = window.reports || [];
             responsive: true,
             plugins: { legend: { display: true } },
             scales: {
-                x: {ticks: {display: false }},
+                x: {ticks: {
+                            maxRotation: 90,  
+                            minRotation: 45,  
+                            autoSkip: true}
+                    },
                 y: {min: -90,  max: -35}
             }
         }
@@ -127,8 +149,14 @@ let reports = window.reports || [];
             responsive: true,
             plugins: { legend: { display: true } },
             scales: {
-                x: {ticks: {display: false }},
+                x: {ticks: {
+                            maxRotation: 90,  
+                            minRotation: 45,  
+                            autoSkip: true}
+                    },
                 y: {min: 0,  max: 10 }
             }
         }
     });
+
+    
